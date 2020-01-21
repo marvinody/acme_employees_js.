@@ -10,17 +10,22 @@ const employees = [
 ];
 
 
+// good first variable name, but what about the second?
 function findEmployeeByName(name, arr) {
-  let final = arr.filter(x => {
-    if (x['name'] === name) {
+  let final = arr.filter(x => { // x is also a bit funky
+    if (x['name'] === name) { // what's the difference between dot notation and bracket notation?
       return x
     }
   })
-
+  // so you have to index [0] because filter returns an array
+  // what if I told you there's a method that will find the first element and return it already?
+  // mind-blown!
+  // look up the .find method and take a look at it
   return final[0]
 }
 
-
+// good first var name, but what is the arr have. is it a generic array with anything in it?
+// can I put fruits names in there and it would still work?
 function findManagerFor(employee, arr) {
   let manager = employee['managerId']
 
@@ -36,7 +41,9 @@ function findManagerFor(employee, arr) {
 function findCoworkersFor(employee, arr) {
   let manager = employee['managerId']
   let currentID = employee['id']
-
+  // good use of filter, wanting to return an array
+  // what is final?
+  // what does it contain? can you call it that?
   let final = arr.filter(x => {
     if (x['managerId'] === manager && x['id'] !== currentID) {
       return x
@@ -57,8 +64,7 @@ function findManagementChainForEmployee(employee, arr) {
     if (x['managerId'] === undefined) {
       return x['id']
     }
-  })[0]['name'];
-
+  })[0]['name']; // same things mentioned before
 
   let check = employee['name']
   if (check === baseCase) {
@@ -77,12 +83,16 @@ function findManagementChainForEmployee(employee, arr) {
 
 function generateManagementTree(arr) {
   let boss = 0
+  // bossPos isn't used at all (and is actually undefined because forEach will return undefined)
   let bossPos = arr.forEach(x => {
     if (x['managerId'] === undefined) {
       boss = arr.indexOf(x)
     }
   })
-
+  // interesting way of doing it
+  // one of the issues with this is you end up mutating the passed in arr
+  // can you do this without mutating it?
+  // we can talk about why you may want to or not mutate stuff later. just lmk
   let final = arr.map(x => {
     x['reports'] = helper(arr, x['id'])
     return x
@@ -99,7 +109,9 @@ function helper(arr, id) {
   })
 }
 
-
+// very close to getting it
+// a 'cheaty' way of knowing how many '-' to place is by using a depth var
+// in your function and incrementing it by 1 each time you recurse
 function displayManagementTree(obj) {
 
   let final = ''
